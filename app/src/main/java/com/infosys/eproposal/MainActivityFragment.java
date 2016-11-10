@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -51,12 +57,10 @@ public class MainActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-
-
         CarregaProp();
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridView);
-        adapter =  (new GridAdapter(getActivity()));
+        adapter = (new GridAdapter(getActivity()));
         gridView.setAdapter(adapter);
 
 
@@ -68,7 +72,7 @@ public class MainActivityFragment extends Fragment {
         BD bd = new BD(getActivity());
         propList = bd.buscarProposals();
 
-        if ( propList.size() <= 20 ) {
+        if (propList.size() <= 20) {
             CarregaPrimeiroProp();
             CarregaProp();
         }
@@ -97,6 +101,9 @@ public class MainActivityFragment extends Fragment {
         Proposal prop_item;
         private Context mcontext;
 
+        private int viewWidth;
+        private int viewHeight;
+
         public GridAdapter(Context context) {
             this.mcontext = context;
 
@@ -121,23 +128,48 @@ public class MainActivityFragment extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 
-            AbsListView listView = (AbsListView) parent;
-            boolean firstVisiblePosition = listView.isItemChecked(position);
+            NewHolder holder = null;
+            ImageView imageView;
 
-            LayoutInflater inflater = (LayoutInflater) mcontext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.grid_view, null);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) mcontext
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.grid_view, null);
 
-            TextView tvprop = (TextView) convertView.findViewById(R.id.tvprop);
-            TextView tvprop_desc = (TextView) convertView.findViewById(R.id.tvprop_desc);
-            ImageView ivprop = (ImageView) convertView.findViewById(R.id.ivprop);
+                holder = new NewHolder();
 
-              prop_item = propList.get(position);
-            tvprop.setText(prop_item.getName());
-            tvprop_desc.setText(prop_item.getDescription());
+                holder.tvprop = (TextView) convertView.findViewById(R.id.tvprop);
+                holder.tvprop_desc = (TextView) convertView.findViewById(R.id.tvprop_desc);
+                holder.ivprop = (ImageView) convertView.findViewById(R.id.ivprop);
 
-            ivprop.setImageDrawable( getResources().getDrawable(R.drawable.infosys_logo));
-           // ivprop.setImageBitmap(getImageFromBLOB(prop_item.getImage()));
+                convertView.setTag(holder);
+
+            } else {
+                holder = (NewHolder) convertView.getTag();
+            }
+
+            prop_item = propList.get(position);
+            holder.tvprop.setText(prop_item.getName());
+            holder.tvprop_desc.setText(prop_item.getDescription());
+
+            String path = Environment.getExternalStorageDirectory() + "/Image/Structure.jpg";
+// "/storage/emulated/0/Image/Structure.jpg"
+            File file;
+            file = new File(path);
+            if (file.exists()) {
+                // ImageView myImage = new ImageView(this);
+                //  myImage.setImageURI(Uri.fromFile(file));
+                // Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                holder.ivprop.setImageURI(Uri.fromFile(file));
+            }
+
+            // holder.ivprop.setImageDrawable(getResources().getDrawable(R.drawable.sumario));
+            // ivprop.setImageBitmap(getImageFromBLOB(prop_item.getImage()));
+
+            // viewWidth = 1000; //convertView.getMeasuredWidth();
+            // viewHeight = 400; //convertView.getMeasuredHeight();
+            // holder.ivprop.setImageBitmap(ImageResizer.decodeSampledBitmapFromResource(getResources(),
+            //        R.drawable.sumario, viewWidth, viewHeight, false));
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,9 +178,9 @@ public class MainActivityFragment extends Fragment {
                     Intent intent;
                     Bundle b = new Bundle();
                     intent = new Intent(getActivity(), MainActivityProp.class);
-                    b.putString("name",prop_item.getName());
-                    b.putString("description",prop_item.getDescription());
-                    b.putLong("id",prop_item.getId());
+                    b.putString("name", prop_item.getName());
+                    b.putString("description", prop_item.getDescription());
+                    b.putLong("id", prop_item.getId());
                     intent.putExtras(b);
 
                     startActivityForResult(intent, MainActivity.DIALOG_MAIN_FRAGMENT);
@@ -157,5 +189,14 @@ public class MainActivityFragment extends Fragment {
             });
             return convertView;
         }
+
+        private class NewHolder {
+
+            public ImageView ivprop;
+            public TextView tvprop;
+            public TextView tvprop_desc;
+        }
+
+
     }
 }

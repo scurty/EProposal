@@ -7,45 +7,47 @@
 
     <GridLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/editText"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_column="1"
-            android:layout_row="0"/>
-
-        <TextView
-            android:text="Proposta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:layout_column="0"
-            android:layout_row="0"/>
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editText1"
+            android:layout_column="1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_column="1"
-            android:layout_row="1"/>
+            android:layout_row="0"
+            android:ems="10"
+            android:inputType="textPersonName" />
 
         <TextView
-            android:text="Senha"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView1"
             android:layout_column="0"
-            android:layout_row="1" />
+            android:layout_row="0"
+            android:text="Proposta" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_row="1"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:text="Senha" />
 
 
     </GridLayout>

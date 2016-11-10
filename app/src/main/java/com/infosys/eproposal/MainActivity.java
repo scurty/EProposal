@@ -37,10 +37,9 @@ import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-
-    private static final int ADD_PROPOSAL = 1;
     public static final int DIALOG_MAIN_FRAGMENT = 2;
+    private static final String TAG = "MainActivity";
+    private static final int ADD_PROPOSAL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onActivityResult " + resultCode);
         switch (requestCode) {
             case ADD_PROPOSAL:
-                String addproposal = data.getExtras()
-                        .getString("addproposal");
-                Log.d(TAG, "Add Porposal " + addproposal);
+                if (resultCode == RESULT_OK) {
+                    String addproposal = data.getExtras()
+                            .getString("addproposal");
+                    Log.d(TAG, "Add Porposal " + addproposal);
+                }
         }
     }
 }
