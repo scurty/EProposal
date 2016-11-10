@@ -53,7 +53,7 @@ public class MainActivityProp extends AppCompatActivity
 
         // Set up the ViewPager with the sections adapter.
         // SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (HackyViewPager) findViewById(R.id.container);
+        mViewPager = (HackyViewPager) findViewById(R.id.container_prop);
 
         // mViewPager.setAdapter(new SamplePagerAdapter());
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));

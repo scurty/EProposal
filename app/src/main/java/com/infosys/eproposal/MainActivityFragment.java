@@ -46,6 +46,8 @@ public class MainActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+
+
         CarregaProp();
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridView);
@@ -61,7 +63,7 @@ public class MainActivityFragment extends Fragment {
         BD bd = new BD(getActivity());
         propList = bd.buscarProposals();
 
-        if ( propList.isEmpty() ) {
+        if ( propList.size() <= 20 ) {
             CarregaPrimeiroProp();
             CarregaProp();
         }
@@ -110,7 +112,9 @@ public class MainActivityFragment extends Fragment {
               prop_item = propList.get(position);
             tvprop.setText(prop_item.getName());
             tvprop_desc.setText(prop_item.getDescription());
-            ivprop.setImageBitmap(getImageFromBLOB(prop_item.getImage()));
+
+            ivprop.setImageDrawable( getResources().getDrawable(R.drawable.infosys_logo));
+           // ivprop.setImageBitmap(getImageFromBLOB(prop_item.getImage()));
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override

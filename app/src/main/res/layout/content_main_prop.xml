@@ -19,8 +19,9 @@
         android:layout_height="0px" />
 
     <com.infosys.eproposal.HackyViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/container"
+        android:id="@+id/container_prop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"  />
+        android:layout_height="match_parent"
+        android:clickable="true" />
 
 </RelativeLayout>
