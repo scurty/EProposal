@@ -33,6 +33,11 @@ public class MainActivityFragment extends Fragment {
     public MainActivityFragment() {
     }
 
+    public static Bitmap getImageFromBLOB(byte[] mBlob) {
+        byte[] bb = mBlob;
+        return BitmapFactory.decodeByteArray(bb, 0, bb.length);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +74,24 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    private void CarregaPrimeiroProp() {
+
+        Proposal prop_insrt = new Proposal();
+        prop_insrt.setName("Proposta Gerdal");
+        prop_insrt.setDescription("Test Inicial Validate");
+
+        Resources res = getResources();
+        Drawable drawable = res.getDrawable(R.drawable.fluxo);
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitMapData = stream.toByteArray();
+        prop_insrt.setImage(bitMapData);
+
+        BD bd = new BD(getActivity());
+        bd.inserirProp(prop_insrt);
+    }
+
     private class GridAdapter extends BaseAdapter {
 
         Proposal prop_item;
@@ -103,7 +126,7 @@ public class MainActivityFragment extends Fragment {
 
             LayoutInflater inflater = (LayoutInflater) mcontext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.grid_view_prop, null);
+            convertView = inflater.inflate(R.layout.grid_view, null);
 
             TextView tvprop = (TextView) convertView.findViewById(R.id.tvprop);
             TextView tvprop_desc = (TextView) convertView.findViewById(R.id.tvprop_desc);
@@ -134,29 +157,5 @@ public class MainActivityFragment extends Fragment {
             });
             return convertView;
         }
-    }
-
-    public static Bitmap getImageFromBLOB(byte[] mBlob)
-    {
-        byte[] bb = mBlob;
-        return BitmapFactory.decodeByteArray(bb, 0, bb.length);
-    }
-
-    private void CarregaPrimeiroProp() {
-
-        Proposal prop_insrt = new Proposal();
-        prop_insrt.setName("Proposta Gerdal");
-        prop_insrt.setDescription("Test Inicial Validate");
-
-        Resources res = getResources();
-        Drawable drawable = res.getDrawable(R.drawable.fluxo);
-        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] bitMapData = stream.toByteArray();
-        prop_insrt.setImage(bitMapData);
-
-        BD bd = new BD(getActivity());
-        bd.inserirProp(prop_insrt);
     }
 }

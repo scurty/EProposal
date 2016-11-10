@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="60dp"
     android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp">
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="60dp"
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_height="200dp"
         android:id="@+id/ivprop"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/sumario"
-        android:layout_width="300dp" />
+        android:src="@drawable/sumario" />
 
     <TextView
         android:id="@+id/tvprop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Teste"
         android:layout_gravity="center_horizontal"
+        android:text="Teste"
         android:textColor="@android:color/black"
         android:textSize="20dp"/>
 
@@ -26,8 +27,8 @@
         android:id="@+id/tvprop_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Descrição"
         android:layout_gravity="center"
+        android:text="Descrição"
         android:textColor="@android:color/black" />
 
 </LinearLayout>
