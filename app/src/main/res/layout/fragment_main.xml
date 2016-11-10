@@ -11,18 +11,19 @@
     tools:context="com.infosys.eproposal.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridView1"
+    <GridView
+        android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
         android:layout_gravity="center"
         android:layout_marginLeft="0dp"
         android:layout_weight="1"
         android:columnWidth="100dp"
         android:gravity="center"
         android:numColumns="auto_fit"
-        android:stretchMode="columnWidth">
+        android:stretchMode="columnWidth"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
     </GridView>
 

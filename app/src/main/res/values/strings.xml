@@ -2,4 +2,54 @@
     <string name="app_name">EProposal</string>
     <string name="action_settings">Settings</string>
     <string name="add_proposal">Add Proposal</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="menu1">Sumário</string>
+    <string name="menu11">Início</string>
+    <string name="menu12">Conteúdo da Apresentação</string>
+    <string name="menu13">Sumário Executivo</string>
+
+    <string name="menu2">Perfil Corporativo</string>
+    <string name="menu21">Infosys</string>
+    <string name="menu22">Produtos e Serviços</string>
+    <string name="menu23">Presença Global</string>
+    <string name="menu24">Perfil Corporativo Global</string>
+    <string name="menu25">Perfil Corporativo Brasil</string>
+    <string name="menu26">Clientes na América do Sul</string>
+
+    <string name="menu3">Nossa Experiência</string>
+    <string name="menu301">Experiencia Infosys</string>
+    <string name="menu302">Alliage</string>
+    <string name="menu303">Hersheys</string>
+    <string name="menu304">Infosys</string>
+    <string name="menu305">Johnson Control</string>
+    <string name="menu306">SKF</string>
+    <string name="menu307">Toyota</string>
+    <string name="menu308">Zurich</string>
+    <string name="menu309">Linde</string>
+    <string name="menu310">BG</string>
+    <string name="menu311">Cerradinho</string>
+    <string name="menu312">Syngenta</string>
+    <string name="menu313">GlobeNet</string>
+    <string name="menu314">ArcelorMittal</string>
+    <string name="menu315">Nidera</string>
+    <string name="menu316">Suporte SAP</string>
+    <string name="menu317">Suporte Oracle</string>
+
+    <string name="menu4">Nossos Produtos</string>
+    <string name="menu41">Produtos Infosys</string>
+    <string name="menu42">IFE</string>
+    <string name="menu43">Arquitetura IFE</string>
+    <string name="menu44">IIP</string>
+    <string name="menu45">Panaya</string>
+    <string name="menu46">RPA</string>
+    <string name="menu47">Skava</string>
+
+    <string name="menu5">Encerramento</string>
+    <string name="menu51">Agradecimento</string>
+    <string name="menu52">Fim</string>
+
+    <string name="infosys">Infosys</string>
 </resources>

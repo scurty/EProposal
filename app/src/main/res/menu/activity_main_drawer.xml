@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/menu1">
+        <menu>
+        <item
+            android:id="@+id/menu11"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu11" />
+            <item
+                android:id="@+id/menu12"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu12" />
+            <item
+                android:id="@+id/menu13"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu13" />
+        </menu>
+
+    </item>
+
+    <item android:title="@string/menu2">
+        <menu>
+        <item
+            android:id="@+id/menu21"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu21" />
+            <item
+                android:id="@+id/menu22"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu22" />
+            <item
+                android:id="@+id/menu23"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu23" />
+            <item
+                android:id="@+id/menu24"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu24" />
+            <item
+                android:id="@+id/menu25"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu25" />
+            <item
+                android:id="@+id/menu26"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu26" />
+        </menu>
+    </item>
+
+    <item android:title="@string/menu3">
+        <menu>
+            <item
+                android:id="@+id/menu301"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu301" />
+            <item
+                android:id="@+id/menu302"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu302" />
+            <item
+                android:id="@+id/menu303"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu303" />
+            <item
+                android:id="@+id/menu304"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu304" />
+            <item
+                android:id="@+id/menu305"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu305" />
+            <item
+                android:id="@+id/menu306"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu306" />
+            <item
+                android:id="@+id/menu307"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu307" />
+            <item
+                android:id="@+id/menu308"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu308" />
+            <item
+                android:id="@+id/menu309"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu309" />
+            <item
+                android:id="@+id/menu310"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu310" />
+            <item
+                android:id="@+id/menu311"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu311" />
+            <item
+                android:id="@+id/menu312"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu312" />
+            <item
+                android:id="@+id/menu313"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu313" />
+            <item
+                android:id="@+id/menu314"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu314" />
+            <item
+                android:id="@+id/menu315"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu315" />
+            <item
+                android:id="@+id/menu316"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu316" />
+            <item
+                android:id="@+id/menu317"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu317" />
+          </menu>
+    </item>
+
+    <item android:title="@string/menu4">
+        <menu>
+            <item
+                android:id="@+id/menu41"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu41" />
+            <item
+                android:id="@+id/menu42"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu42" />
+            <item
+                android:id="@+id/menu43"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu43" />
+            <item
+                android:id="@+id/menu44"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu44" />
+            <item
+                android:id="@+id/menu45"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu45" />
+            <item
+                android:id="@+id/menu46"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu46" />
+            <item
+                android:id="@+id/menu47"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu47" />
+        </menu>
+
+
+    </item>
+
+    <item android:title="@string/menu5">
+        <menu>
+            <item
+                android:id="@+id/menu51"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu51" />
+            <item
+                android:id="@+id/menu52"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu52" />
+
+        </menu>
+            </item>
+
+</menu>
