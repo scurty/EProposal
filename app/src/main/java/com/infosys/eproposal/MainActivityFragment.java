@@ -143,7 +143,7 @@ public class MainActivityFragment extends Fragment {
                 holder.ivprop = (ImageView) convertView.findViewById(R.id.ivprop);
 
                 convertView.setTag(holder);
-
+ 
             } else {
                 holder = (NewHolder) convertView.getTag();
             }
