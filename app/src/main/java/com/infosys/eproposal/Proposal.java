@@ -11,7 +11,8 @@ public class Proposal {
     private String name;
     private int type;
     private String description;
-    private byte[] image;
+    // private byte[] image;
+    private String imagepath;
 
     public long getId() {
         return id;
@@ -45,11 +46,11 @@ public class Proposal {
         this.description = description;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImagepath() {
+        return imagepath;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
     }
 }

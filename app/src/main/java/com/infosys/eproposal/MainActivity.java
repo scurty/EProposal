@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
                     String addproposal = data.getExtras()
                             .getString("addproposal");
                     Log.d(TAG, "Add Porposal " + addproposal);
+
+                    MainActivityFragment f = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+                    if (f != null) {
+                        f.refreshAdapter();
+                    }
                 }
         }
     }

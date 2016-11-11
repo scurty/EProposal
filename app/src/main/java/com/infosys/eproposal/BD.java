@@ -36,13 +36,14 @@ public class BD {
         valores.put("name", prop.getName());
         valores.put("type", prop.getType());
         valores.put("description", prop.getDescription());
-        valores.put("image", prop.getImage());
+        //   valores.put("image", prop.getImage());
+        valores.put("imagepath", prop.getImagepath());
         bd.insert("prop", null, valores);
     }
 
     public List<Proposal> buscarProposals() {
         List<Proposal> list = new ArrayList<Proposal>();
-        String[] colunas = new String[]{"_id", "name", "type", "description", "image"};
+        String[] colunas = new String[]{"_id", "name", "type", "description", "imagepath"};
 
         Cursor cursor = bd.query("prop", colunas, null, null, null, null, "name ASC");
 
@@ -54,7 +55,7 @@ public class BD {
                     u.setName(cursor.getString(1));
                     u.setType(cursor.getInt(2));
                     u.setDescription(cursor.getString(3));
-                    u.setImage(cursor.getBlob(4));
+                    u.setImagepath(cursor.getString(4));
 
                     list.add(u);
 
