@@ -91,6 +91,32 @@ public class AddProposal extends Activity {
         prop_insrt.setImagepath(stg);
 
         BD bd = new BD(getApplication());
-        bd.inserirProp(prop_insrt);
+        long id_prop = bd.inserirProp(prop_insrt);
+
+        // Itens
+        ProposalItem propitem_insrt = new ProposalItem();
+        propitem_insrt.setId_prop(id_prop);
+        propitem_insrt.setSeq(0);
+        propitem_insrt.setMenu("Primeiro Nível");
+        propitem_insrt.setName("Hello");
+        propitem_insrt.setType(1);
+        propitem_insrt.setPath(Memory.FindDir("/Data/", getApplication()) + "capa0.png");
+        bd.inserirPropItem(propitem_insrt);
+
+        propitem_insrt.setId_prop(id_prop);
+        propitem_insrt.setSeq(1);
+        propitem_insrt.setMenu("Primeiro Nível");
+        propitem_insrt.setName("Hello 2");
+        propitem_insrt.setType(1);
+        propitem_insrt.setPath(Memory.FindDir("/Data/", getApplication()) + "capa1.png");
+        bd.inserirPropItem(propitem_insrt);
+
+        propitem_insrt.setId_prop(id_prop);
+        propitem_insrt.setSeq(2);
+        propitem_insrt.setMenu("Segundo Nível");
+        propitem_insrt.setName("Fim 1");
+        propitem_insrt.setType(1);
+        propitem_insrt.setPath(Memory.FindDir("/Data/", getApplication()) + "capa2.png");
+        bd.inserirPropItem(propitem_insrt);
     }
 }

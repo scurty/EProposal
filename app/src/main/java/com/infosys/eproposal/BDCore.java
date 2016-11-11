@@ -23,8 +23,9 @@ public class BDCore extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase bd) {
 
-        bd.execSQL("create table prop(_id integer primary key autoincrement, name text not null, type int , description text not null, imagepath text);");
-        bd.execSQL("create table prop_item   (_id integer primary key autoincrement, id_prop integer not null, seq int not null, imagepath text);");
+        bd.execSQL("create table prop     (_id integer primary key autoincrement, name text not null, type int , description text not null, imagepath text);");
+        bd.execSQL("create table prop_item(_id integer primary key autoincrement, id_prop integer not null, seq int not null, menu text, name text, type int, path text);");
+
 
     //    bd.execSQL("create table athlete     (_id integer primary key autoincrement, id_inst integer not null, id_station integer not null, name text not null, age int not null);");
      //   bd.execSQL("create table aula     (_id integer primary key,  nome text not null, tp_instalacao integer not null, tp_spin integer not null, tp_aula integer not null, nivel integer not null, criador text not null, duracao integer not null, pathmusic text );");

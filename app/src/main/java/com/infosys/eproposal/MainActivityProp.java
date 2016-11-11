@@ -37,7 +37,8 @@ public class MainActivityProp extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTitle(R.string.infosys);
+        Bundle b = getIntent().getExtras();
+        setTitle(b.getString("name"));
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

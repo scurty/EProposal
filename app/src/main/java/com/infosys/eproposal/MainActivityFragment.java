@@ -205,12 +205,14 @@ public class MainActivityFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
+                    Proposal prop_click = propList.get(position);
+
                     Intent intent;
                     Bundle b = new Bundle();
                     intent = new Intent(getActivity(), MainActivityProp.class);
-                    b.putString("name", prop_item.getName());
-                    b.putString("description", prop_item.getDescription());
-                    b.putLong("id", prop_item.getId());
+                    b.putString("name", prop_click.getName());
+                    b.putString("description", prop_click.getDescription());
+                    b.putLong("id", prop_click.getId());
                     intent.putExtras(b);
 
                     startActivityForResult(intent, MainActivity.DIALOG_MAIN_FRAGMENT);
