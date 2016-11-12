@@ -212,7 +212,7 @@ public class MainActivityFragment extends Fragment {
                     intent = new Intent(getActivity(), MainActivityProp.class);
                     b.putString("name", prop_click.getName());
                     b.putString("description", prop_click.getDescription());
-                    b.putLong("id", prop_click.getId());
+                    b.putLong("id_prop", prop_click.getId());
                     intent.putExtras(b);
 
                     startActivityForResult(intent, MainActivity.DIALOG_MAIN_FRAGMENT);

@@ -15,8 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 import uk.co.senab.photoview.PhotoView;
 
@@ -26,6 +29,9 @@ import uk.co.senab.photoview.PhotoView;
 public class MainActivityProp extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String nameProp;
+    long idProp;
+    List<ProposalItem> propItemList;
     private DrawerLayout drawer;
     private ViewPager mViewPager;
     private NavigationView navigationView;
@@ -38,7 +44,9 @@ public class MainActivityProp extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Bundle b = getIntent().getExtras();
-        setTitle(b.getString("name"));
+        nameProp = b.getString("name");
+        idProp = b.getLong("id_prop");
+        setTitle(nameProp);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,6 +59,19 @@ public class MainActivityProp extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Menu m = navigationView.getMenu();
+        SubMenu topChannelMenu = null;
+        BD bd = new BD(getApplication());
+        String chave = "asdfg";
+        propItemList = bd.buscarProposalItens(idProp);
+        for (ProposalItem propItem : propItemList) {
+            if (!chave.equals(propItem.getMenu())) {
+                chave = propItem.getMenu();
+                topChannelMenu = m.addSubMenu(propItem.getMenu());
+            }
+            topChannelMenu.add(propItem.getName());
+        }
 
         // Set up the ViewPager with the sections adapter.
         // SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -74,7 +95,7 @@ public class MainActivityProp extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
-                String pri = getResources().getString(R.string.infosys);
+                String pri = nameProp; //getResources().getString(R.string.infosys);
                 String sec = null;
 
                 if (position >= 0 && position <= 2) {
@@ -87,9 +108,9 @@ public class MainActivityProp extends AppCompatActivity
                     sec = getResources().getString(R.string.menu4);
                 } else if (position >= 33 && position <= 34) {
                     sec = getResources().getString(R.string.menu5);
-                } else if (position == 35){
+                } else if (position == 35) {
                     sec = "Video";
-                }  else if (position == 36) {
+                } else if (position == 36) {
                     sec = "Chart";
                 }
                 setTitle(pri + " - " + sec);
@@ -142,8 +163,14 @@ public class MainActivityProp extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
+        for (int i = 0; i < propItemList.size(); i++) {
+            if (propItemList.get(i).getName().equals(item.getTitle())) {
+                mViewPager.setCurrentItem(i);
+            }
+        }
+        /*
+         int id = item.getItemId();
 // Menu 1
         if (id == R.id.menu11) {
             mViewPager.setCurrentItem(0);
@@ -222,14 +249,14 @@ public class MainActivityProp extends AppCompatActivity
             mViewPager.setCurrentItem(33);
         } else { // if (id == R.id.menu52) {
             mViewPager.setCurrentItem(34);
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    static class SamplePagerAdapter extends PagerAdapter {
+    /*static class SamplePagerAdapter extends PagerAdapter {
 
         private static final int[] sDrawables = {
                 R.drawable.sumario,
@@ -303,7 +330,7 @@ public class MainActivityProp extends AppCompatActivity
             return view == object;
         }
 
-    }
+    }*/
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
@@ -357,19 +384,28 @@ public class MainActivityProp extends AppCompatActivity
 
 // http://www.compiletimeerror.com/2013/10/playing-video-in-android-application.html#.WCE6WvorJEa
 // http://stackoverflow.com/questions/18413309/how-to-implement-a-viewpager-with-different-fragments-layouts
-            if (pos < sDrawables.length) {
-                return PhotoFragment.newInstance(sDrawables[pos]);
-            } else if (pos == 35) {
-                return VideoFragment.newInstance("SecondFragment, Instance 1");
-            } else if (pos == 36) {
-                return ChartFragment.newInstance("Chart");
+
+            Fragment frag = null;
+            if (pos <= (propItemList.size() - 1)) {
+                switch (propItemList.get(pos).getType()) {
+                    case 1: // Image
+                        frag = PhotoFragment.newInstance(propItemList.get(pos).getPath());
+
+                    case 2:
+                        break;
+                }
+                ;
+            } else if (pos == propItemList.size()) {
+                frag = VideoFragment.newInstance("SecondFragment, Instance 1");
+            } else if (pos == (propItemList.size() + 1)) {
+                frag = ChartFragment.newInstance("Chart");
             }
-            return null;
+            return frag;
         }
 
         @Override
         public int getCount() {
-            return sDrawables.length + 2;
+            return propItemList.size() + 2;
         }
 
 

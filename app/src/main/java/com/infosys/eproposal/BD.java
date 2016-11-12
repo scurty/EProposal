@@ -76,11 +76,13 @@ public class BD {
         bd.insert("prop_item", null, valores);
     }
 
-    public List<ProposalItem> buscarProposalItens() {
+    public List<ProposalItem> buscarProposalItens(long id_prop) {
         List<ProposalItem> list = new ArrayList<ProposalItem>();
         String[] colunas = new String[]{"_id", "id_prop", "seq", "menu", "name", "type", "path"};
-
-        Cursor cursor = bd.query("prop_item", colunas, null, null, null, null, "seq ASC");
+        String whereClause = "id_prop = ?";
+        String[] whereArgs = new String[]{
+                String.valueOf(id_prop)};
+        Cursor cursor = bd.query("prop_item", colunas, whereClause, whereArgs, null, null, "seq ASC");
 
         if (cursor != null && cursor.getCount() > 0) {
             if (cursor.moveToFirst()) {

@@ -1,10 +1,15 @@
 package com.infosys.eproposal;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import java.io.File;
 
 import uk.co.senab.photoview.PhotoView;
 
@@ -13,11 +18,11 @@ import uk.co.senab.photoview.PhotoView;
  */
 public class PhotoFragment extends Fragment {
 
-    public static PhotoFragment newInstance(int seq) {
+    public static PhotoFragment newInstance(String seq) {
 
         PhotoFragment f = new PhotoFragment();
         Bundle b = new Bundle();
-        b.putInt("msg", seq);
+        b.putString("msg", seq);
 
         f.setArguments(b);
 
@@ -28,7 +33,15 @@ public class PhotoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         PhotoView photoView = new PhotoView(container.getContext());
-        photoView.setImageResource(getArguments().getInt("msg"));
+        File imgFile = new File(getArguments().getString("msg"));
+
+        if (imgFile.exists()) {
+
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            photoView.setImageBitmap(myBitmap);
+
+        }
+
         //  container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return photoView;
     }
