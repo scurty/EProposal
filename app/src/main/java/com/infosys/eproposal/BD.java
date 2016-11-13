@@ -103,4 +103,9 @@ public class BD {
         }
         return (list);
     }
+
+
+    public void deleteProposal(long id) {
+        bd.delete("prop", "_id = " + id, null);
+    }
 }

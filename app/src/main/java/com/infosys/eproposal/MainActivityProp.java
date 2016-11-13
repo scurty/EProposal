@@ -95,22 +95,16 @@ public class MainActivityProp extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
+
                 String pri = nameProp; //getResources().getString(R.string.infosys);
                 String sec = null;
 
-                if (position >= 0 && position <= 2) {
-                    sec = getResources().getString(R.string.menu1);
-                } else if (position >= 3 && position <= 8) {
-                    sec = getResources().getString(R.string.menu2);
-                } else if (position >= 9 && position <= 25) {
-                    sec = getResources().getString(R.string.menu3);
-                } else if (position >= 26 && position <= 32) {
-                    sec = getResources().getString(R.string.menu4);
-                } else if (position >= 33 && position <= 34) {
-                    sec = getResources().getString(R.string.menu5);
-                } else if (position == 35) {
+
+                if (position <= propItemList.size() - 1) {
+                    sec = propItemList.get(position).getMenu();
+                } else if (position == propItemList.size()) {
                     sec = "Video";
-                } else if (position == 36) {
+                } else if (position == propItemList.size() + 1) {
                     sec = "Chart";
                 }
                 setTitle(pri + " - " + sec);
@@ -334,7 +328,7 @@ public class MainActivityProp extends AppCompatActivity
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        private final int[] sDrawables = {
+      /*  private final int[] sDrawables = {
                 R.drawable.sumario,
                 R.drawable.conteudo,
                 R.drawable.sumario_executivo,
@@ -373,7 +367,7 @@ public class MainActivityProp extends AppCompatActivity
                 R.drawable.skava,
 
                 R.drawable.agradecimento,
-                R.drawable.fim};
+                R.drawable.fim};*/
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

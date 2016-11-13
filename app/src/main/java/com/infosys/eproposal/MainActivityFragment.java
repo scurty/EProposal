@@ -1,6 +1,7 @@
 package com.infosys.eproposal;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,12 +102,6 @@ public class MainActivityFragment extends Fragment {
         BD bd = new BD(getActivity());
         propList = bd.buscarProposals();
 
-        //  if (propList.isEmpty()) {
-        //     CarregaPrimeiroProp();
-        //      CarregaProp();
-        // }
-
-
         // Map<String, File> externalLocations = ExternalStorage
         //         .getAllStorageLocations();
         //  sdCard = externalLocations.get(ExternalStorage.SD_CARD);
@@ -127,18 +123,16 @@ public class MainActivityFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-
     private class GridAdapter extends BaseAdapter {
 
         Proposal prop_item;
         private Context mcontext;
-
-        private int viewWidth;
-        private int viewHeight;
+        private LayoutInflater mInflater;
 
         public GridAdapter(Context context) {
             this.mcontext = context;
 
+            mInflater = LayoutInflater.from(context);
         }
 
         @Override
@@ -161,18 +155,38 @@ public class MainActivityFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
 
             NewHolder holder = null;
-            ImageView imageView;
 
             if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) mcontext
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.grid_view, null);
-
                 holder = new NewHolder();
+
+                // LayoutInflater inflater = (LayoutInflater) mcontext
+                //         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = mInflater.inflate(R.layout.grid_view, null);
 
                 holder.tvprop = (TextView) convertView.findViewById(R.id.tvprop);
                 holder.tvprop_desc = (TextView) convertView.findViewById(R.id.tvprop_desc);
                 holder.ivprop = (ImageView) convertView.findViewById(R.id.ivprop);
+
+               /*   holder.ivprop.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Log.d(TAG,"holder.ivprop.setOnClickListener " + position);
+
+                       Proposal prop_click = propList.get(position);
+
+                        Intent intent;
+                        Bundle b = new Bundle();
+                        intent = new Intent(getActivity(), MainActivityProp.class);
+                        b.putString("name", prop_click.getName());
+                        b.putString("description", prop_click.getDescription());
+                        b.putLong("id_prop", prop_click.getId());
+                        intent.putExtras(b);
+
+                        startActivityForResult(intent, MainActivity.DIALOG_MAIN_FRAGMENT);
+
+                    }
+                });*/
 
                 convertView.setTag(holder);
 
@@ -205,6 +219,8 @@ public class MainActivityFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
+                    Log.d(TAG, "convertView.setOnClickListener " + position);
+
                     Proposal prop_click = propList.get(position);
 
                     Intent intent;
@@ -216,7 +232,33 @@ public class MainActivityFragment extends Fragment {
                     intent.putExtras(b);
 
                     startActivityForResult(intent, MainActivity.DIALOG_MAIN_FRAGMENT);
+                }
+            });
 
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    new AlertDialog.Builder(mcontext)
+                            .setTitle("Delete entry")
+                            .setMessage("Are you sure you want to delete this entry?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+
+                                    BD bd = new BD(getActivity());
+                                    bd.deleteProposal(propList.get(position).getId());
+                                    refreshAdapter();
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                    return false;
                 }
             });
             return convertView;
