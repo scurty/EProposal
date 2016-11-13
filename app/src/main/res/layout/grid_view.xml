@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/ivprop"
+        style="?android:actionButtonStyle"
         android:layout_width="300dp"
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"

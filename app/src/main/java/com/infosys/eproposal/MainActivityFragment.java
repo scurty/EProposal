@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -155,6 +157,8 @@ public class MainActivityFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
 
             NewHolder holder = null;
+            Animation animation;
+            animation = AnimationUtils.loadAnimation(mcontext, R.anim.animation_move);
 
             if (convertView == null) {
                 holder = new NewHolder();
@@ -261,6 +265,8 @@ public class MainActivityFragment extends Fragment {
                     return false;
                 }
             });
+            convertView.startAnimation(animation);
+
             return convertView;
         }
 
