@@ -35,6 +35,7 @@ import java.util.Map;
 
 import static android.R.attr.pathData;
 import static com.infosys.eproposal.Memory.sdCard;
+import static com.infosys.eproposal.R.id.ivprop;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -131,6 +132,7 @@ public class MainActivityFragment extends Fragment {
         private Context mcontext;
         private LayoutInflater mInflater;
 
+
         public GridAdapter(Context context) {
             this.mcontext = context;
 
@@ -169,7 +171,7 @@ public class MainActivityFragment extends Fragment {
 
                 holder.tvprop = (TextView) convertView.findViewById(R.id.tvprop);
                 holder.tvprop_desc = (TextView) convertView.findViewById(R.id.tvprop_desc);
-                holder.ivprop = (ImageView) convertView.findViewById(R.id.ivprop);
+                holder.ivprop = (ImageView) convertView.findViewById(ivprop);
 
                /*   holder.ivprop.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -201,23 +203,20 @@ public class MainActivityFragment extends Fragment {
             prop_item = propList.get(position);
             holder.tvprop.setText(prop_item.getName());
             holder.tvprop_desc.setText(prop_item.getDescription());
+            holder.ivprop.setImageBitmap(prop_item.getImagebitmap());
 
-            File file;
-            file = new File(prop_item.getImagepath());
-            if (file.exists()) {
-                // ImageView myImage = new ImageView(this);
-                //  myImage.setImageURI(Uri.fromFile(file));
-                // Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                holder.ivprop.setImageURI(Uri.fromFile(file));
-            }
+           /* if (prop_item.getImagebitmap() == null) {
+                File file;
+                file = new File(prop_item.getImagepath());
+                if (file.exists()) {
 
-            // holder.ivprop.setImageDrawable(getResources().getDrawable(R.drawable.sumario));
-            // ivprop.setImageBitmap(getImageFromBLOB(prop_item.getImage()));
-
-            // viewWidth = 1000; //convertView.getMeasuredWidth();
-            // viewHeight = 400; //convertView.getMeasuredHeight();
-            // holder.ivprop.setImageBitmap(ImageResizer.decodeSampledBitmapFromResource(getResources(),
-            //        R.drawable.sumario, viewWidth, viewHeight, false));
+                    //  holder.ivprop.setImageURI(Uri.fromFile(file));
+                    prop_item.setImagebitmap(decodeFile(file));
+                    holder.ivprop.setImageBitmap(prop_item.getImagebitmap());
+                }
+            } else {
+                holder.ivprop.setImageBitmap(prop_item.getImagebitmap());
+            }*/
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override

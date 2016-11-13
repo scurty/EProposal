@@ -9,6 +9,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +62,12 @@ public class BD {
                     u.setDescription(cursor.getString(3));
                     u.setImagepath(cursor.getString(4));
 
+                    File file;
+                    file = new File(u.getImagepath());
+                    if (file.exists()) {
+                        u.setImagebitmap(decodeFile(file));
+                    }
+
                     list.add(u);
 
                 } while (cursor.moveToNext());
@@ -64,6 +75,7 @@ public class BD {
         }
         return (list);
     }
+
 
     public void inserirPropItem(ProposalItem propitem) {
         ContentValues valores = new ContentValues();
@@ -104,8 +116,33 @@ public class BD {
         return (list);
     }
 
-
     public void deleteProposal(long id) {
         bd.delete("prop", "_id = " + id, null);
+    }
+
+    private Bitmap decodeFile(File f) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE = 300;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {
+        }
+        return null;
     }
 }

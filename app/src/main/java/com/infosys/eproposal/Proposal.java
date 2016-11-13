@@ -13,6 +13,7 @@ public class Proposal {
     private String description;
     // private byte[] image;
     private String imagepath;
+    private Bitmap imagebitmap;
 
     public long getId() {
         return id;
@@ -52,5 +53,13 @@ public class Proposal {
 
     public void setImagepath(String imagepath) {
         this.imagepath = imagepath;
+    }
+
+    public Bitmap getImagebitmap() {
+        return imagebitmap;
+    }
+
+    public void setImagebitmap(Bitmap imagebitmap) {
+        this.imagebitmap = imagebitmap;
     }
 }
