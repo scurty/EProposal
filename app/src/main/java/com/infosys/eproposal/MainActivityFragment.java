@@ -238,8 +238,9 @@ public class MainActivityFragment extends Fragment {
                 public boolean onLongClick(View view) {
 
                     new AlertDialog.Builder(mcontext)
-                            .setTitle("Delete entry")
-                            .setMessage("Are you sure you want to delete this entry?")
+                            .setTitle(getResources().getString(R.string.deletetitle))
+                            .setMessage(getResources().getString(R.string.deletetitlemsg) + " "
+                                    + propList.get(position).getName() + " ?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete

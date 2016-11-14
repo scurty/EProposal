@@ -2,4 +2,6 @@
 <resources>
     <string name="action_settings">Configurações</string>
     <string name="add_proposal">Adicionar Proposta</string>
+    <string name="deletetitle">Apagar Proposta</string>
+    <string name="deletetitlemsg">Deseja apagar a proposta</string>
 </resources>
