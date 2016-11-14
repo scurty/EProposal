@@ -1,5 +1,7 @@
 package com.infosys.eproposal;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -19,9 +21,12 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.util.List;
 
 import uk.co.senab.photoview.PhotoView;
+
+import static android.media.CamcorderProfile.get;
 
 /**
  * Created by scurt on 09/11/2016.
@@ -185,12 +190,21 @@ public class MainActivityProp extends AppCompatActivity
             if (pos <= (propItemList.size() - 1)) {
                 switch (propItemList.get(pos).getType()) {
                     case 1: // Image
-                        frag = PhotoFragment.newInstance(propItemList.get(pos).getPath());
+                        frag = PhotoFragment.newInstance(propItemList.get(pos).getImagepath());
 
+                        /*      ProposalItem propitem = propItemList.get(pos);
+                        if (propitem.getImagebitmap() == null) {
+                            File imgFile = new File(propitem.getImagepath());
+                            if (imgFile.exists()) {
+                                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                propitem.setImagebitmap(myBitmap);
+                                //    Bitmap myBitmap = BD.decodeFile(imgFile, 300);
+                            }
+                        }
+                        frag = PhotoFragment.newInstance(propitem.getImagebitmap());*/
                     case 2:
                         break;
                 }
-                ;
             } else if (pos == propItemList.size()) {
                 frag = VideoFragment.newInstance("SecondFragment, Instance 1");
             } else if (pos == (propItemList.size() + 1)) {

@@ -36,6 +36,32 @@ public class BD {
         mcontext = context;
     }
 
+    public static Bitmap decodeFile(File f, int size) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+
+            // The new size we want to scale to
+            final int REQUIRED_SIZE = size;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {
+        }
+        return null;
+    }
+
     public long inserirProp(Proposal prop) {
         ContentValues valores = new ContentValues();
         valores.put("name", prop.getName());
@@ -65,7 +91,7 @@ public class BD {
                     File file;
                     file = new File(u.getImagepath());
                     if (file.exists()) {
-                        u.setImagebitmap(decodeFile(file));
+                        u.setImagebitmap(decodeFile(file, 300));
                     }
 
                     list.add(u);
@@ -76,7 +102,6 @@ public class BD {
         return (list);
     }
 
-
     public void inserirPropItem(ProposalItem propitem) {
         ContentValues valores = new ContentValues();
         valores.put("id_prop", propitem.getId_prop());
@@ -84,7 +109,7 @@ public class BD {
         valores.put("menu", propitem.getMenu());
         valores.put("name", propitem.getName());
         valores.put("type", propitem.getType());
-        valores.put("path", propitem.getPath());
+        valores.put("path", propitem.getImagepath());
         bd.insert("prop_item", null, valores);
     }
 
@@ -106,7 +131,13 @@ public class BD {
                     u.setMenu(cursor.getString(3));
                     u.setName(cursor.getString(4));
                     u.setType(cursor.getInt(5));
-                    u.setPath(cursor.getString(6));
+                    u.setImagepath(cursor.getString(6));
+
+                    /*File file;
+                    file = new File(u.getImagepath());
+                    if (file.exists()) {
+                        u.setImagebitmap(decodeFile(file,300));
+                    }*/
 
                     list.add(u);
 
@@ -118,31 +149,5 @@ public class BD {
 
     public void deleteProposal(long id) {
         bd.delete("prop", "_id = " + id, null);
-    }
-
-    private Bitmap decodeFile(File f) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 300;
-
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
-                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
-                scale *= 2;
-            }
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-        } catch (FileNotFoundException e) {
-        }
-        return null;
     }
 }

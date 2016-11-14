@@ -176,11 +176,8 @@ public class MainActivityFragment extends Fragment {
                /*   holder.ivprop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         Log.d(TAG,"holder.ivprop.setOnClickListener " + position);
-
                        Proposal prop_click = propList.get(position);
-
                         Intent intent;
                         Bundle b = new Bundle();
                         intent = new Intent(getActivity(), MainActivityProp.class);
@@ -188,9 +185,7 @@ public class MainActivityFragment extends Fragment {
                         b.putString("description", prop_click.getDescription());
                         b.putLong("id_prop", prop_click.getId());
                         intent.putExtras(b);
-
                         startActivityForResult(intent, MainActivity.DIALOG_MAIN_FRAGMENT);
-
                     }
                 });*/
 

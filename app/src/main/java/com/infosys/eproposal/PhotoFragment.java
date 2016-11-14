@@ -23,9 +23,7 @@ public class PhotoFragment extends Fragment {
         PhotoFragment f = new PhotoFragment();
         Bundle b = new Bundle();
         b.putString("msg", seq);
-
         f.setArguments(b);
-
         return f;
     }
 
@@ -38,13 +36,11 @@ public class PhotoFragment extends Fragment {
         if (imgFile.exists()) {
 
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            //    Bitmap myBitmap = BD.decodeFile(imgFile, 300);
+
             photoView.setImageBitmap(myBitmap);
-
         }
-
         //  container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return photoView;
     }
-
-
 }

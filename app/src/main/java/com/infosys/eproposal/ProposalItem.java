@@ -1,5 +1,7 @@
 package com.infosys.eproposal;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by sidney_leite on 11/11/2016.
  */
@@ -11,7 +13,8 @@ public class ProposalItem {
     private String menu;
     private String name;
     private int type; // 1 - Image  2 - video
-    private String path;
+    private String imagepath;
+    private Bitmap imagebitmap;
 
     public long getId() {
         return id;
@@ -61,11 +64,19 @@ public class ProposalItem {
         this.type = type;
     }
 
-    public String getPath() {
-        return path;
+    public String getImagepath() {
+        return imagepath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
+    public Bitmap getImagebitmap() {
+        return imagebitmap;
+    }
+
+    public void setImagebitmap(Bitmap imagebitmap) {
+        this.imagebitmap = imagebitmap;
     }
 }

@@ -4,14 +4,14 @@
     tools:context="com.infosys.eproposal.MainActivity">
     <item
         android:id="@+id/add_proposal"
-        android:orderInCategory="10"
-        android:title="@string/add_proposal"
         android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="1"
+        android:title="@string/add_proposal"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="10"
         android:title="@string/action_settings"
         />
 

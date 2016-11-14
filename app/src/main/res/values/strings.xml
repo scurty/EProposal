@@ -1,57 +1,55 @@
 <resources>
-    <string name="app_name">EProposal</string>
+    <string name="app_name" translatable="false">E-Proposal</string>
     <string name="action_settings">Settings</string>
     <string name="add_proposal">Add Proposal</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
-    <string name="menu1">Sumário</string>
-    <string name="menu11">Início</string>
-    <string name="menu12">Conteúdo da Apresentação</string>
-    <string name="menu13">Sumário Executivo</string>
+    <string name="menu1" translatable="false">Sumário</string>
+    <string name="menu11" translatable="false">Início</string>
+    <string name="menu12" translatable="false">Conteúdo da Apresentação</string>
+    <string name="menu13" translatable="false">Sumário Executivo</string>
 
-    <string name="menu2">Perfil Corporativo</string>
-    <string name="menu21">Infosys</string>
-    <string name="menu22">Produtos e Serviços</string>
-    <string name="menu23">Presença Global</string>
-    <string name="menu24">Perfil Corporativo Global</string>
-    <string name="menu25">Perfil Corporativo Brasil</string>
-    <string name="menu26">Clientes na América do Sul</string>
+    <string name="menu2" translatable="false">Perfil Corporativo</string>
+    <string name="menu21" translatable="false">Infosys</string>
+    <string name="menu22" translatable="false">Produtos e Serviços</string>
+    <string name="menu23" translatable="false">Presença Global</string>
+    <string name="menu24" translatable="false">Perfil Corporativo Global</string>
+    <string name="menu25" translatable="false">Perfil Corporativo Brasil</string>
+    <string name="menu26" translatable="false">Clientes na América do Sul</string>
 
-    <string name="menu3">Nossa Experiência</string>
-    <string name="menu301">Experiencia Infosys</string>
-    <string name="menu302">Alliage</string>
-    <string name="menu303">Hersheys</string>
-    <string name="menu304">Infosys</string>
-    <string name="menu305">Johnson Control</string>
-    <string name="menu306">SKF</string>
-    <string name="menu307">Toyota</string>
-    <string name="menu308">Zurich</string>
-    <string name="menu309">Linde</string>
-    <string name="menu310">BG</string>
-    <string name="menu311">Cerradinho</string>
-    <string name="menu312">Syngenta</string>
-    <string name="menu313">GlobeNet</string>
-    <string name="menu314">ArcelorMittal</string>
-    <string name="menu315">Nidera</string>
-    <string name="menu316">Suporte SAP</string>
-    <string name="menu317">Suporte Oracle</string>
+    <string name="menu3" translatable="false">Nossa Experiência</string>
+    <string name="menu301" translatable="false">Experiencia Infosys</string>
+    <string name="menu302" translatable="false">Alliage</string>
+    <string name="menu303" translatable="false">Hersheys</string>
+    <string name="menu304" translatable="false">Infosys</string>
+    <string name="menu305" translatable="false">Johnson Control</string>
+    <string name="menu306" translatable="false">SKF</string>
+    <string name="menu307" translatable="false">Toyota</string>
+    <string name="menu308" translatable="false">Zurich</string>
+    <string name="menu309" translatable="false">Linde</string>
+    <string name="menu310" translatable="false">BG</string>
+    <string name="menu311" translatable="false">Cerradinho</string>
+    <string name="menu312" translatable="false">Syngenta</string>
+    <string name="menu313" translatable="false">GlobeNet</string>
+    <string name="menu314" translatable="false">ArcelorMittal</string>
+    <string name="menu315" translatable="false">Nidera</string>
+    <string name="menu316" translatable="false">Suporte SAP</string>
+    <string name="menu317" translatable="false">Suporte Oracle</string>
 
-    <string name="menu4">Nossos Produtos</string>
-    <string name="menu41">Produtos Infosys</string>
-    <string name="menu42">IFE</string>
-    <string name="menu43">Arquitetura IFE</string>
-    <string name="menu44">IIP</string>
-    <string name="menu45">Panaya</string>
-    <string name="menu46">RPA</string>
-    <string name="menu47">Skava</string>
+    <string name="menu4" translatable="false">Nossos Produtos</string>
+    <string name="menu41" translatable="false">Produtos Infosys</string>
+    <string name="menu42" translatable="false">IFE</string>
+    <string name="menu43" translatable="false">Arquitetura IFE</string>
+    <string name="menu44" translatable="false">IIP</string>
+    <string name="menu45" translatable="false">Panaya</string>
+    <string name="menu46" translatable="false">RPA</string>
+    <string name="menu47" translatable="false">Skava</string>
 
-    <string name="menu5">Encerramento</string>
-    <string name="menu51">Agradecimento</string>
-    <string name="menu52">Fim</string>
-
-    <string name="infosys">Infosys</string>
+    <string name="menu5" translatable="false">Encerramento</string>
+    <string name="menu51" translatable="false">Agradecimento</string>
+    <string name="menu52" translatable="false">Fim</string>
 
     <string-array name="sd_card_paths">
         <item>/extSdCard</item>
