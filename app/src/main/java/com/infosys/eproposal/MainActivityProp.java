@@ -214,10 +214,9 @@ public class MainActivityProp extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return propItemList.size() + 2;
+            return propItemList.size();
+            // return propItemList.size() + 2;
         }
-
-
     }
 
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
