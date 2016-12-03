@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import uk.co.senab.photoview.PhotoView;
 
@@ -33,13 +36,42 @@ public class PhotoFragment extends Fragment {
         File imgFile = new File(getArguments().getString("msg"));
 
         if (imgFile.exists()) {
-            Bitmap myBitmap;
+            Bitmap myBitmap = null;
 
             // myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             // Bitmap myBitmap = BD.decodeFile(imgFile, 300);
-            final BitmapFactory.Options options = new BitmapFactory.Options();
+
+          /* final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
-            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);
+            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);*/
+
+            try {
+                BitmapFactory.Options o = new BitmapFactory.Options();
+                o.inJustDecodeBounds = true;
+                FileInputStream fis = null;
+                fis = new FileInputStream(imgFile.getAbsolutePath());
+                BitmapFactory.decodeStream(fis, null, o);
+                fis.close();
+                final int REQUIRED_SIZE = 1000;
+                int width_tmp = o.outWidth, height_tmp = o.outHeight;
+                int scale = 1;
+                while (true) {
+                    if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE)
+                        break;
+                    width_tmp /= 2;
+                    height_tmp /= 2;
+                    scale *= 2;
+                }
+                BitmapFactory.Options op = new BitmapFactory.Options();
+                op.inSampleSize = scale;
+                fis = new FileInputStream(imgFile.getAbsolutePath());
+                myBitmap = BitmapFactory.decodeStream(fis, null, op);
+                fis.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             photoView.setImageBitmap(myBitmap);
         }
