@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.io.File;
 
@@ -34,9 +33,13 @@ public class PhotoFragment extends Fragment {
         File imgFile = new File(getArguments().getString("msg"));
 
         if (imgFile.exists()) {
+            Bitmap myBitmap;
 
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            //    Bitmap myBitmap = BD.decodeFile(imgFile, 300);
+            // myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            // Bitmap myBitmap = BD.decodeFile(imgFile, 300);
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);
 
             photoView.setImageBitmap(myBitmap);
         }
