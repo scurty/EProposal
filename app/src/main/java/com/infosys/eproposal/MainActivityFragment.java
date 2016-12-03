@@ -3,15 +3,10 @@ package com.infosys.eproposal;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,22 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import static android.R.attr.pathData;
-import static com.infosys.eproposal.Memory.sdCard;
 import static com.infosys.eproposal.R.id.ivprop;
 
 /**

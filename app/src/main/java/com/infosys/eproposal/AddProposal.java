@@ -2,35 +2,24 @@ package com.infosys.eproposal;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static android.R.attr.text;
-import static com.infosys.eproposal.R.id.editText1;
-import static java.security.AccessController.getContext;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by sidney_leite on 09/11/2016.
  */
 public class AddProposal extends Activity {
 
+    private static final String TAG = "AddProposal";
     TextView txtproposal;
     TextView txtsenha;
 
@@ -54,16 +43,15 @@ public class AddProposal extends Activity {
             @Override
             public void onClick(View view) {
 
-                String nameProposal;
+               /*  String nameProposal;
                 if (txtproposal.getText().toString().isEmpty()) {
                     nameProposal = "Proposta";
-
                 } else {
                     nameProposal = txtproposal.getText().toString();
                 }
+                CarregaPrimeiroProp(nameProposal);*/
 
-                //        Cloud();
-                CarregaPrimeiroProp(nameProposal);
+                ValidarProposta(txtproposal.getText().toString(), txtsenha.getText().toString());
 
                 Intent intent = getIntent();
                 intent.putExtra("addproposal", txtproposal.getText().toString());
@@ -80,6 +68,94 @@ public class AddProposal extends Activity {
                 finish();
             }
         });
+    }
+
+    private void ValidarProposta(String valnome, String valsenha) {
+        String stg;
+        BD bd = new BD(getApplication());
+
+        try {
+            Proposal prop = new Proposal();
+            prop.setName(valnome);
+            prop.setSenha(valsenha);
+
+            stg = new EndpointsAsyncTask().execute("sel", prop).get();
+            JSONArray start_object = new JSONArray(stg);
+
+            if (start_object != null) {
+                //  for (int i = 0; i < start_object.length(); i++) {
+                Proposal propa = new Proposal();
+                JSONObject obj = (JSONObject) start_object.get(0);
+                propa.setId((int) obj.get("id"));
+                propa.setName((String) obj.get("name"));
+                propa.setDescription((String) obj.get("description"));
+                propa.setImagepath((String) obj.get("imagepath"));
+                // Montar novo path
+                String extension = "";
+                int j = propa.getImagepath().lastIndexOf('.');
+                if (j >= 0) {
+                    extension = propa.getImagepath().substring(j + 1);
+                }
+                String newfile = propa.getId() + "." + extension;
+                propa.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfile);
+
+                //     propa.setTimestamp((String) obj.get("timestamp"));
+                long id_prop = bd.inserirProp(propa);
+
+                AsyncTaskGravarImagem task = new AsyncTaskGravarImagem(this);
+                task.execute("prop", propa);
+
+                // listar itens
+                try {
+                    long ss = (int) obj.get("id");
+                    stg = new EndpointsAsyncTask().execute("lstitem", String.valueOf(ss)).get();
+                    JSONArray start_object3 = new JSONArray(stg);
+                    //    List list = new ArrayList();
+
+                    if (start_object != null) {
+                        for (int i = 0; i < start_object3.length(); i++) {
+                            ProposalItem propaitem = new ProposalItem();
+                            JSONObject obj3 = (JSONObject) start_object3.get(i);
+                            propaitem.setId_prop(id_prop);
+                            propaitem.setId((int) obj3.get("id"));
+                            propaitem.setName((String) obj3.get("nome"));
+                            propaitem.setMenu((String) obj3.get("menu"));
+                            propaitem.setSeq((int) obj3.get("seq"));
+                            propaitem.setType((int) obj3.get("type"));
+                            propaitem.setImagepath((String) obj3.get("imagepath"));
+
+                            // Montar novo path
+                            String extensiony = "";
+                            int y = propaitem.getImagepath().lastIndexOf('.');
+                            if (y >= 0) {
+                                extension = propaitem.getImagepath().substring(y + 1);
+                            }
+                            String newfiley = propaitem.getId() + "_" + propaitem.getSeq() + "." + extension;
+                            propaitem.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfiley);
+
+                            bd.inserirPropItem(propaitem);
+                            AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
+                            task3.execute("propitem", propaitem);
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -54,19 +54,5 @@
     <string name="deletetitle">Delete</string>
     <string name="deletetitlemsg">Are you sure you want to delete this entry?</string>
 
-    <string-array name="sd_card_paths">
-        <item>/extSdCard</item>
-        <item>/sdcard</item>
-        <item>/external_sd</item>
-        <item>/external_sd1</item>
-        <item>/external_sd2</item>
-        <item>/sdcard-ext</item>
-        <item>/sdcard1-ext</item>
-        <item>/sdcard2-ext</item>
-        <item>/sdcard1</item>
-        <item>/sdcard2</item>
-        <item>/sd</item>
-        <item>/sd1</item>
-        <item>/sd2</item>
-    </string-array>
+
 </resources>

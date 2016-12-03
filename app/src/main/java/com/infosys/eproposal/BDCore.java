@@ -8,10 +8,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
 public class BDCore extends SQLiteOpenHelper {
     private static final String NOME_BD = "proposal";
     private static final int VERSAO_BD = 1;
@@ -23,7 +19,7 @@ public class BDCore extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase bd) {
 
-        bd.execSQL("create table prop     (_id integer primary key autoincrement, name text not null, type int , description text not null, imagepath text);");
+        bd.execSQL("create table prop     (_id integer primary key autoincrement, name text not null, senha text not null, type int , description text not null, imagepath text);");
         bd.execSQL("create table prop_item(_id integer primary key autoincrement, id_prop integer not null, seq int not null, menu text, name text, type int, path text);");
 
 

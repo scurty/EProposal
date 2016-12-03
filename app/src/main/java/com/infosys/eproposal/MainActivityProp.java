@@ -1,14 +1,11 @@
 package com.infosys.eproposal;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,14 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
 
-import java.io.File;
 import java.util.List;
-
-import uk.co.senab.photoview.PhotoView;
-
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by scurt on 09/11/2016.
@@ -69,13 +60,17 @@ public class MainActivityProp extends AppCompatActivity
         SubMenu topChannelMenu = null;
         BD bd = new BD(getApplication());
         String chave = "asdfg";
+        int chaveint = 0;
         propItemList = bd.buscarProposalItens(idProp);
         for (ProposalItem propItem : propItemList) {
             if (!chave.equals(propItem.getMenu())) {
                 chave = propItem.getMenu();
+                chaveint = chaveint + 1;
                 topChannelMenu = m.addSubMenu(propItem.getMenu());
             }
-            topChannelMenu.add(propItem.getName()).setIcon(R.drawable.ic_menu_gallery);
+            topChannelMenu.add(chaveint, (int) propItem.getId(), Menu.NONE, String.valueOf(propItem.getId()))
+                    .setIcon(R.drawable.ic_menu_gallery)
+                    .setTitle(propItem.getName());
         }
 
         // Set up the ViewPager with the sections adapter.
@@ -164,9 +159,13 @@ public class MainActivityProp extends AppCompatActivity
         // Handle navigation view item clicks here.
 
         for (int i = 0; i < propItemList.size(); i++) {
-            if (propItemList.get(i).getName().equals(item.getTitle())) {
+            if (propItemList.get(i).getId() == item.getItemId()) {
                 mViewPager.setCurrentItem(i);
             }
+            ;
+           /* if (propItemList.get(i).getName().equals(item.getTitle())) {
+                mViewPager.setCurrentItem(i);
+            }*/
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

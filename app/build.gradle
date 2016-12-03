@@ -32,8 +32,15 @@ dependencies {
     compile 'com.google.http-client:google-http-client-android:1.17.0-rc' exclude module: 'httpclient'
     compile 'com.google.api-client:google-api-client-android:1.17.0-rc' exclude module: 'httpclient'
     compile 'com.google.api-client:google-api-client-gson:1.17.0-rc' exclude module: 'httpclient'
-    compile 'com.google.api-client:google-api-client:1.20.0'*/
+    compile 'com.google.api-client:google-api-client:1.20.0'
+    compile fileTree(dir: 'libs', include: '*.jar')*/
+
+    compile 'com.google.apis:google-api-services-oauth2:v1-rev127-1.22.0'
+    compile 'com.google.apis:google-api-services-storage:v1-rev90-1.22.0'
 
     compile 'com.github.chrisbanes.photoview:library:+'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
+
+    compile project(path: ':endpoints.backend', configuration: 'android-endpoints')
+
 }

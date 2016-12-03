@@ -8,20 +8,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +57,8 @@ public class BD {
     public long inserirProp(Proposal prop) {
         ContentValues valores = new ContentValues();
         valores.put("name", prop.getName());
+        //  valores.put("senha", prop.getSenha());
+        valores.put("senha", "Senha");
         valores.put("type", prop.getType());
         valores.put("description", prop.getDescription());
         valores.put("imagepath", prop.getImagepath());
@@ -74,7 +68,7 @@ public class BD {
 
     public List<Proposal> buscarProposals() {
         List<Proposal> list = new ArrayList<Proposal>();
-        String[] colunas = new String[]{"_id", "name", "type", "description", "imagepath"};
+        String[] colunas = new String[]{"_id", "name", "senha", "type", "description", "imagepath"};
 
         Cursor cursor = bd.query("prop", colunas, null, null, null, null, "_id ASC");
 
@@ -84,9 +78,10 @@ public class BD {
                     Proposal u = new Proposal();
                     u.setId(cursor.getLong(0));
                     u.setName(cursor.getString(1));
-                    u.setType(cursor.getInt(2));
-                    u.setDescription(cursor.getString(3));
-                    u.setImagepath(cursor.getString(4));
+                    u.setSenha(cursor.getString(2));
+                    u.setType(cursor.getInt(3));
+                    u.setDescription(cursor.getString(4));
+                    u.setImagepath(cursor.getString(5));
 
                     File file;
                     file = new File(u.getImagepath());

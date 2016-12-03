@@ -1,6 +1,5 @@
-package com.infosys.eproposal;
+package com.example;
 
-import android.graphics.Bitmap;
 
 /**
  * Created by sidney_leite on 09/11/2016.
@@ -14,7 +13,16 @@ public class Proposal {
     private String description;
     // private byte[] image;
     private String imagepath;
-    private Bitmap imagebitmap;
+    // private Bitmap imagebitmap;
+    private String timestamp;
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public long getId() {
         return id;
@@ -56,13 +64,13 @@ public class Proposal {
         this.imagepath = imagepath;
     }
 
-    public Bitmap getImagebitmap() {
+/*    public Bitmap getImagebitmap() {
         return imagebitmap;
     }
 
     public void setImagebitmap(Bitmap imagebitmap) {
         this.imagebitmap = imagebitmap;
-    }
+    }*/
 
     public String getSenha() {
         return senha;
