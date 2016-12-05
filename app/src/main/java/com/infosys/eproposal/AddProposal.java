@@ -125,7 +125,7 @@ public class AddProposal extends Activity {
                             propaitem.setImagepath((String) obj3.get("imagepath"));
 
                             // Montar novo path
-                            String extensiony = "";
+                            extension = "";
                             int y = propaitem.getImagepath().lastIndexOf('.');
                             if (y >= 0) {
                                 extension = propaitem.getImagepath().substring(y + 1);
