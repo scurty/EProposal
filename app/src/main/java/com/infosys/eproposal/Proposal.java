@@ -12,8 +12,8 @@ public class Proposal {
     private String senha;
     private int type;
     private String description;
-    // private byte[] image;
     private String imagepath;
+    private String extension;
     private Bitmap imagebitmap;
 
     public long getId() {
@@ -70,5 +70,13 @@ public class Proposal {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 }

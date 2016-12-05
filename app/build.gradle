@@ -21,7 +21,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    /* androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    /*androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
          exclude group: 'com.android.support', module: 'support-annotations'
      })*/
     compile 'com.android.support:appcompat-v7:25.0.0'
@@ -37,6 +37,8 @@ dependencies {
 
     compile 'com.google.apis:google-api-services-oauth2:v1-rev127-1.22.0'
     compile 'com.google.apis:google-api-services-storage:v1-rev90-1.22.0'
+
+    // compile group: 'com.google.cloud', name: 'google-cloud-storage', version: '0.4.0'
 
     compile 'com.github.chrisbanes.photoview:library:+'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'

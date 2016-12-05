@@ -38,7 +38,7 @@ public class AsyncTaskGravarImagem extends AsyncTask<Object, Void, String> {
                 if (i >= 0) {
                     extension = proposalItem.getImagepath().substring(i + 1);
                 }
-                newfile = proposalItem.getId() + "_" + proposalItem.getSeq() + "." + extension;
+                newfile = proposalItem.getId_prop() + "_" + proposalItem.getSeq() + "." + extension;
                 break;
         }
 

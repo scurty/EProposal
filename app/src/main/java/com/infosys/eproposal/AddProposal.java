@@ -130,10 +130,12 @@ public class AddProposal extends Activity {
                             if (y >= 0) {
                                 extension = propaitem.getImagepath().substring(y + 1);
                             }
-                            String newfiley = propaitem.getId() + "_" + propaitem.getSeq() + "." + extension;
+                            //   String newfiley = propaitem.getId() + "_" + propaitem.getSeq() + "." + extension;
+                            String newfiley = propa.getId() + "_" + propaitem.getSeq() + "." + extension;
                             propaitem.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfiley);
 
                             bd.inserirPropItem(propaitem);
+                            propaitem.setId_prop(propa.getId());
                             AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
                             task3.execute("propitem", propaitem);
                         }

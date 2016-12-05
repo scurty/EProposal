@@ -100,7 +100,6 @@ public class MyEndpoint {
 
         try {
             Connection conn = DriverManager.getConnection(url);
-
             PreparedStatement statementCreateVisit = conn.prepareStatement(createVisitSql);
             conn.createStatement().executeUpdate(createTableSql);
             statementCreateVisit.setString(1, userIp);
@@ -109,7 +108,6 @@ public class MyEndpoint {
             statementCreateVisit.setString(4, userIp);
             statementCreateVisit.setTimestamp(5, new Timestamp(new Date().getTime()));
             statementCreateVisit.executeUpdate();
-
 
             ResultSet rs = conn.prepareStatement(selectSql).executeQuery();
             // out.print("Last 10 visits:\n");
@@ -337,7 +335,7 @@ public class MyEndpoint {
     public MyBean listaritem(@Named("name") String name) throws ServletException {
 
         // store only the first two octets of a users ip address
-        String prop_item = name;
+        String prop_id = name;
         List list = new ArrayList();
 
         final String createTableSql = "CREATE TABLE IF NOT EXISTS prop_item ( prop_item_id INT NOT NULL "
@@ -380,7 +378,7 @@ public class MyEndpoint {
             statementCreateVisit.executeUpdate();*/
 
             PreparedStatement statementCreateVisit = conn.prepareStatement(selectSql);
-            statementCreateVisit.setString(1, prop_item);
+            statementCreateVisit.setString(1, prop_id);
 
             ResultSet rs = statementCreateVisit.executeQuery();
             // out.print("Last 10 visits:\n");
@@ -388,8 +386,8 @@ public class MyEndpoint {
             ProposalItem propItem = new ProposalItem();
             while (rs.next()) {
 
-                id = rs.getInt("prop_id");
-                id_prop = rs.getInt("prop_item_id");
+                id = rs.getInt("prop_item_id");
+                id_prop = rs.getInt("prop_id");
                 nome = rs.getString("nome");
                 menu = rs.getString("menu");
                 seq = rs.getInt("seq");
@@ -399,7 +397,7 @@ public class MyEndpoint {
 
                 propItem.setId(Long.valueOf(id));
                 propItem.setId_prop(Long.valueOf(id_prop));
-                propItem.setName(nome);
+                propItem.setNome(nome);
                 propItem.setMenu(menu);
                 propItem.setType(type);
                 propItem.setSeq(seq);
@@ -529,6 +527,116 @@ public class MyEndpoint {
         return response;
     }
 
+    @ApiMethod(name = "deletar")
+    public MyBean deletar(@Named("name") String name) throws ServletException {
+
+        // store only the first two octets of a users ip address
+
+        String prop_id = name;
+
+        final String deleteSql = "DELETE FROM prop WHERE prop_id = ?";
+
+        String url;
+        if (System
+                .getProperty("com.google.appengine.runtime.version").startsWith("Google App Engine/")) {
+            // Check the System properties to determine if we are running on appengine or not
+            // Google App Engine sets a few system properties that will reliably be present on a remote
+            // instance.
+            url = System.getProperty("ae-cloudsql.cloudsql-database-url");
+            try {
+                // Load the class that provides the new "jdbc:google:mysql://" prefix.
+                Class.forName("com.mysql.jdbc.GoogleDriver");
+            } catch (ClassNotFoundException e) {
+                try {
+                    throw new ServletException("Error loading Google JDBC Driver", e);
+                } catch (ServletException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        } else {
+            // Set the url with the local MySQL database connection url when running locally
+            url = System.getProperty("ae-cloudsql.local-database-url");
+        }
+        try {
+            Connection conn = DriverManager.getConnection(url);
+
+            PreparedStatement statementCreateVisit = conn.prepareStatement(deleteSql);
+            statementCreateVisit.setString(1, prop_id);
+            int rs2 = statementCreateVisit.executeUpdate();
+
+            if (rs2 > 0) {
+                // int last_inserted_id = rs2.getInt(1);
+                MyBean response = new MyBean();
+                response.setData("ok");
+
+                return response;
+
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("SQL error", e);
+        }
+
+        MyBean response = new MyBean();
+        response.setData("nok");
+
+        return response;
+    }
+
+    @ApiMethod(name = "deletaritem")
+    public MyBean deletaritem(@Named("name") String name) throws ServletException {
+
+        // store only the first two octets of a users ip address
+
+        String prop_item_id = name;
+
+        final String deleteSql = "DELETE FROM prop_item WHERE prop_item_id = ?";
+
+        String url;
+        if (System
+                .getProperty("com.google.appengine.runtime.version").startsWith("Google App Engine/")) {
+            // Check the System properties to determine if we are running on appengine or not
+            // Google App Engine sets a few system properties that will reliably be present on a remote
+            // instance.
+            url = System.getProperty("ae-cloudsql.cloudsql-database-url");
+            try {
+                // Load the class that provides the new "jdbc:google:mysql://" prefix.
+                Class.forName("com.mysql.jdbc.GoogleDriver");
+            } catch (ClassNotFoundException e) {
+                try {
+                    throw new ServletException("Error loading Google JDBC Driver", e);
+                } catch (ServletException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        } else {
+            // Set the url with the local MySQL database connection url when running locally
+            url = System.getProperty("ae-cloudsql.local-database-url");
+        }
+        try {
+            Connection conn = DriverManager.getConnection(url);
+
+            PreparedStatement statementCreateVisit = conn.prepareStatement(deleteSql);
+            statementCreateVisit.setString(1, prop_item_id);
+            int rs2 = statementCreateVisit.executeUpdate();
+
+            if (rs2 > 0) {
+
+                MyBean response = new MyBean();
+                response.setData("ok");
+
+                return response;
+            }
+        } catch (SQLException e) {
+            throw new ServletException("SQL error", e);
+        }
+
+        MyBean response = new MyBean();
+        response.setData("nok");
+
+        return response;
+    }
+
     @ApiMethod(name = "selecionar")
     public MyBean selecionar(@Named("name") String name) throws ServletException {
 
@@ -600,7 +708,7 @@ public class MyEndpoint {
 
                 //  out.print("Time: " + timeStamp + " Addr: " + savedIp + "\n");
             }
-               /* out.print(list.toString());
+              /* out.print(list.toString());
 
                 resp.setContentType("text/plain");
                 resp.getWriter().println(list.toString());*/
@@ -615,4 +723,5 @@ public class MyEndpoint {
 
         return response;
     }
+
 }
