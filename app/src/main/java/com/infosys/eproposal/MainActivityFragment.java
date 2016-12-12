@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.File;
@@ -34,7 +35,8 @@ public class MainActivityFragment extends Fragment {
     String pathData;
     private GridView gridView;
     private List<Proposal> propList;
-    private GridAdapter adapter;
+    public static GridAdapter adapter;
+    public static ProgressBar progressBar;
 
     public MainActivityFragment() {
     }
@@ -83,6 +85,8 @@ public class MainActivityFragment extends Fragment {
         adapter = (new GridAdapter(getActivity()));
         gridView.setAdapter(adapter);
 
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         return rootView;
     }

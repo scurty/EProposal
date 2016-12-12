@@ -1,27 +1,46 @@
 package com.infosys.eproposal;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import endpoints.backend.myApi.MyApi;
+
+import static android.R.attr.type;
 
 /**
  * Created by sidney_leite on 09/11/2016.
  */
-public class AddProposal extends Activity {
+public class AddProposal extends AppCompatActivity {
 
     private static final String TAG = "AddProposal";
     TextView txtproposal;
     TextView txtsenha;
+    MyApi myApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +69,12 @@ public class AddProposal extends Activity {
                     nameProposal = txtproposal.getText().toString();
                 }
                 CarregaPrimeiroProp(nameProposal);*/
+                VouGravarProp();
 
-                ValidarProposta(txtproposal.getText().toString(), txtsenha.getText().toString());
+
+                AsyncTaskValidarProposta task = new AsyncTaskValidarProposta();
+                task.execute(txtproposal.getText().toString(), txtsenha.getText().toString());
+                // ValidarProposta(txtproposal.getText().toString(), txtsenha.getText().toString());
 
                 Intent intent = getIntent();
                 intent.putExtra("addproposal", txtproposal.getText().toString());
@@ -70,17 +93,51 @@ public class AddProposal extends Activity {
         });
     }
 
+    private void VouGravarProp() {
+        MainActivityFragment.progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    private class AsyncTaskValidarProposta extends AsyncTask<Object, Void, String> {
+
+        String nome;
+
+        public AsyncTaskValidarProposta() {
+
+        }
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+
+
+            ValidarProposta((String) objects[0], (String) objects[1]);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            Toast.makeText(getApplication(), "Proposta Carregada", Toast.LENGTH_LONG).show();
+
+            MainActivityFragment.progressBar.setVisibility(View.GONE);
+
+        }
+
+    }
+
     private void ValidarProposta(String valnome, String valsenha) {
         String stg;
         BD bd = new BD(getApplication());
 
         try {
+
             Proposal prop = new Proposal();
             prop.setName(valnome);
             prop.setSenha(valsenha);
 
-            stg = new EndpointsAsyncTask().execute("sel", prop).get();
-            JSONArray start_object = new JSONArray(stg);
+            //stg = new EndpointsAsyncTask().execute("sel", prop).get();
+            JSONArray start_object = new JSONArray(Endpoints("sel", prop));
 
             if (start_object != null) {
                 //  for (int i = 0; i < start_object.length(); i++) {
@@ -102,14 +159,16 @@ public class AddProposal extends Activity {
                 //     propa.setTimestamp((String) obj.get("timestamp"));
                 long id_prop = bd.inserirProp(propa);
 
-                AsyncTaskGravarImagem task = new AsyncTaskGravarImagem(this);
-                task.execute("prop", propa);
+                // AsyncTaskGravarImagem task = new AsyncTaskGravarImagem(this);
+                // task.execute("prop", propa);
+                GravarImagem("prop", propa);
 
                 // listar itens
                 try {
                     long ss = (int) obj.get("id");
-                    stg = new EndpointsAsyncTask().execute("lstitem", String.valueOf(ss)).get();
-                    JSONArray start_object3 = new JSONArray(stg);
+
+                    // stg = new EndpointsAsyncTask().execute("lstitem", String.valueOf(ss)).get();
+                    JSONArray start_object3 = new JSONArray(Endpoints("lstitem", String.valueOf(ss)));
                     //    List list = new ArrayList();
 
                     if (start_object != null) {
@@ -136,30 +195,128 @@ public class AddProposal extends Activity {
 
                             bd.inserirPropItem(propaitem);
                             propaitem.setId_prop(propa.getId());
-                            AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
-                            task3.execute("propitem", propaitem);
+
+                            GravarImagem("propitem", propaitem);
+                            //    AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
+                            //   task3.execute("propitem", propaitem);
+
                         }
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    private String Endpoints(Object... objects) {
+
+        if (myApiService == null) {  // Only do this once
+            MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null)
+                    // options for running against local devappserver
+                    // - 10.0.2.2 is localhost's IP address in Android emulator
+                    // - turn off compression when running against local devappserver
+                    //   .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                    .setRootUrl("https://eproposal-150911.appspot.com/_ah/api/")
+                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                        @Override
+                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                            abstractGoogleClientRequest.setDisableGZipContent(true);
+                        }
+                    });
+            // end options for devappserver
+
+            // package endpointsnew.backend;
+            myApiService = builder.build();
+        }
+
+        try {
+            String type = (String) objects[0];
+            switch (type) {
+                case "lst":
+                    return myApiService.listar(" ").execute().getData();
+                case "isr":
+                    Proposal prop = (Proposal) objects[1];
+                    JSONObject obj = new JSONObject();
+                    obj.put("nome", prop.getName());
+                    obj.put("descricao", prop.getDescription());
+                    obj.put("senha", prop.getSenha());
+                    obj.put("imagepath", prop.getImagepath());
+                    String nome = obj.toString();
+                    //    String nome = prop.getName();
+                    return myApiService.inserir(nome).execute().getData();
+                case "lstitem":
+                    String txprop_item = (String) objects[1];
+                    return myApiService.listaritem(txprop_item).execute().getData();
+                case "isritem":
+                    ProposalItem propitem = (ProposalItem) objects[1];
+                    JSONObject obj2 = new JSONObject();
+                    obj2.put("id_prop", propitem.getId_prop());
+                    obj2.put("nome", propitem.getName());
+                    obj2.put("seq", propitem.getSeq());
+                    obj2.put("menu", propitem.getMenu());
+                    obj2.put("type", propitem.getType());
+                    obj2.put("imagepath", propitem.getImagepath());
+                    String stgobj = obj2.toString();
+                    //    String nome = prop.getName();
+                    return myApiService.inseriritem(stgobj).execute().getData();
+                case "sel":
+                    Proposal propa = (Proposal) objects[1];
+                    JSONObject objs = new JSONObject();
+                    objs.put("nome", propa.getName());
+                    objs.put("senha", propa.getSenha());
+                    String nomes = objs.toString();
+                    //    String nome = prop.getName();
+                    return myApiService.selecionar(nomes).execute().getData();
+            }
+        } catch (IOException e) {
+            return e.getMessage();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void GravarImagem(Object... objects) {
+        String newfile = null;
+        String extension = "";
+        int i;
+
+        String type = (String) objects[0];
+        switch (type) {
+            case "prop":
+                Proposal prop = (Proposal) objects[1];
+                i = prop.getImagepath().lastIndexOf('.');
+                if (i >= 0) {
+                    extension = prop.getImagepath().substring(i + 1);
+                }
+                newfile = prop.getId() + "." + extension;
+                break;
+            case "propitem":
+                ProposalItem proposalItem = (ProposalItem) objects[1];
+                i = proposalItem.getImagepath().lastIndexOf('.');
+                if (i >= 0) {
+                    extension = proposalItem.getImagepath().substring(i + 1);
+                }
+                newfile = proposalItem.getId_prop() + "_" + proposalItem.getSeq() + "." + extension;
+                break;
+        }
+
+        try {
+            CloudStorage.Context(this);
+            String dirdest = Environment.getExternalStorageDirectory().getPath() + "/EProposal/Data";
+            CloudStorage.downloadFile("eproposal-150911.appspot.com", newfile, dirdest); //"39_6.png"
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     private void CarregaPrimeiroProp(String text) {
 
@@ -430,4 +587,6 @@ public class AddProposal extends Activity {
         }
 
     }
+
+
 }

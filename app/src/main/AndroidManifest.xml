@@ -22,11 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+        <activity android:name=".AddProposal" />
+       <!-- <activity
             android:name=".AddProposal"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/add_proposal"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Dialog" />-->
         <activity
             android:name=".MainActivityProp"
             android:label="@string/app_name"

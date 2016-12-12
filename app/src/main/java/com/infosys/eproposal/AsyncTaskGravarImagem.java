@@ -1,8 +1,12 @@
 package com.infosys.eproposal;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by scurt on 02/12/2016.
@@ -10,9 +14,27 @@ import android.os.Environment;
 public class AsyncTaskGravarImagem extends AsyncTask<Object, Void, String> {
 
     Context mContext;
+   // protected ProgressDialog progressDialog;
+
+
+/*    ProgressDialog yourProgress;
+    yourProgress = new ProgressDialog(AddProposal.this);
+    yourProgress.setTitle("Title");
+    yourProgress.setMessage("wait for a while");
+    yourProgress.show();
+    yourProgress.dismiss();*/
 
     public AsyncTaskGravarImagem(Context context) {
         mContext = context;
+    }
+
+    @Override
+    protected void onPreExecute()
+    {
+        super.onPreExecute();
+        Log.d(TAG, "Executando onPreExecute de EfetuaLogin");
+        //inicia diálogo de progresso, mostranto processamento com servidor.
+     //   progressDialog = ProgressDialog.show(mContext, "Autenticando", "Contactando o servidor, por favor, aguarde alguns instantes.", true, false);
     }
 
     @Override
@@ -50,6 +72,12 @@ public class AsyncTaskGravarImagem extends AsyncTask<Object, Void, String> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+//        progressDialog.dismiss();
     }
 
     public String execute(ProposalItem... propaitem) {

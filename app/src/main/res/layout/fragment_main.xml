@@ -11,6 +11,7 @@
     tools:context="com.infosys.eproposal.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
+
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
@@ -26,5 +27,14 @@
         android:numColumns="auto_fit">
 
     </GridView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
