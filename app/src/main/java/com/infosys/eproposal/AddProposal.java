@@ -148,7 +148,7 @@ public class AddProposal extends AppCompatActivity {
 
                 //stg = new EndpointsAsyncTask().execute("sel", prop).get();
                 JSONArray start_object = new JSONArray(Endpoints("sel", prop));
-                MainActivityFragment.progressBar.setProgress(20);
+                MainActivityFragment.progressBar.setProgress(10);
 
                 if (start_object != null) {
                     //  for (int i = 0; i < start_object.length(); i++) {
@@ -169,11 +169,15 @@ public class AddProposal extends AppCompatActivity {
 
                     //     propa.setTimestamp((String) obj.get("timestamp"));
                     long id_prop = bd.inserirProp(propa);
-                    MainActivityFragment.progressBar.setProgress(40);
+
+                    MainActivityFragment.progressBar.setProgress(20);
+
                     // AsyncTaskGravarImagem task = new AsyncTaskGravarImagem(this);
                     // task.execute("prop", propa);
                     GravarImagem("prop", propa);
-                    MainActivityFragment.progressBar.setProgress(60);
+
+                    MainActivityFragment.progressBar.setProgress(30);
+
                     // listar itens
                     try {
                         long ss = (int) obj.get("id");
@@ -181,8 +185,10 @@ public class AddProposal extends AppCompatActivity {
                         // stg = new EndpointsAsyncTask().execute("lstitem", String.valueOf(ss)).get();
                         JSONArray start_object3 = new JSONArray(Endpoints("lstitem", String.valueOf(ss)));
                         //    List list = new ArrayList();
-                        progressbarstatus = 70;
-                        MainActivityFragment.progressBar.setProgress(progressbarstatus);
+
+                        MainActivityFragment.progressBar.setProgress(40);
+                        int index = (50 / start_object3.length()) / 2 ;
+                        progressbarstatus = 50;
                         if (start_object != null) {
                             for (int i = 0; i < start_object3.length(); i++) {
                                 ProposalItem propaitem = new ProposalItem();
@@ -207,14 +213,14 @@ public class AddProposal extends AppCompatActivity {
 
                                 bd.inserirPropItem(propaitem);
 
-                                progressbarstatus = progressbarstatus + 1;
+                                progressbarstatus = progressbarstatus + index;
                                 MainActivityFragment.progressBar.setProgress(progressbarstatus);
 
                                 propaitem.setId_prop(propa.getId());
 
                                 GravarImagem("propitem", propaitem);
 
-                                progressbarstatus = progressbarstatus + 1;
+                                progressbarstatus = progressbarstatus + index;
                                 MainActivityFragment.progressBar.setProgress(progressbarstatus);
 
                                 //    AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
