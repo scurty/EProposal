@@ -41,6 +41,7 @@ public class MainActivityFragment extends Fragment {
     private List<Proposal> propList;
     public static GridAdapter adapter;
     public static ProgressBar progressBar;
+    public static ProgressBar progressBars;
 
     public MainActivityFragment() {
     }
@@ -93,7 +94,9 @@ public class MainActivityFragment extends Fragment {
         gridView.setAdapter(adapter);
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        progressBars = (ProgressBar) rootView.findViewById(R.id.progressBars);
         progressBar.setVisibility(View.INVISIBLE);
+        progressBars.setVisibility(View.INVISIBLE);
 
         return rootView;
     }

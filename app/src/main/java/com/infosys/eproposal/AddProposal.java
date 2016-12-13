@@ -96,7 +96,10 @@ public class AddProposal extends AppCompatActivity {
     }
 
     private void VouGravarProp() {
+        MainActivityFragment.progressBar.setMax(100);
+        MainActivityFragment.progressBar.setProgress(0);
         MainActivityFragment.progressBar.setVisibility(View.VISIBLE);
+        MainActivityFragment.progressBars.setVisibility(View.VISIBLE);
 
     }
 
@@ -127,12 +130,15 @@ public class AddProposal extends AppCompatActivity {
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
             MainActivityFragment.progressBar.setVisibility(View.GONE);
-
+            MainActivityFragment.progressBars.setVisibility(View.GONE);
         }
 
         private void ValidarProposta(String valnome, String valsenha) {
             String stg;
             BD bd = new BD(getApplication());
+            int progressbarstatus = 0;
+
+            MainActivityFragment.progressBar.setProgress(1);
 
             try {
 
@@ -142,6 +148,7 @@ public class AddProposal extends AppCompatActivity {
 
                 //stg = new EndpointsAsyncTask().execute("sel", prop).get();
                 JSONArray start_object = new JSONArray(Endpoints("sel", prop));
+                MainActivityFragment.progressBar.setProgress(20);
 
                 if (start_object != null) {
                     //  for (int i = 0; i < start_object.length(); i++) {
@@ -162,11 +169,11 @@ public class AddProposal extends AppCompatActivity {
 
                     //     propa.setTimestamp((String) obj.get("timestamp"));
                     long id_prop = bd.inserirProp(propa);
-
+                    MainActivityFragment.progressBar.setProgress(40);
                     // AsyncTaskGravarImagem task = new AsyncTaskGravarImagem(this);
                     // task.execute("prop", propa);
                     GravarImagem("prop", propa);
-
+                    MainActivityFragment.progressBar.setProgress(60);
                     // listar itens
                     try {
                         long ss = (int) obj.get("id");
@@ -174,7 +181,8 @@ public class AddProposal extends AppCompatActivity {
                         // stg = new EndpointsAsyncTask().execute("lstitem", String.valueOf(ss)).get();
                         JSONArray start_object3 = new JSONArray(Endpoints("lstitem", String.valueOf(ss)));
                         //    List list = new ArrayList();
-
+                        progressbarstatus = 70;
+                        MainActivityFragment.progressBar.setProgress(progressbarstatus);
                         if (start_object != null) {
                             for (int i = 0; i < start_object3.length(); i++) {
                                 ProposalItem propaitem = new ProposalItem();
@@ -198,13 +206,22 @@ public class AddProposal extends AppCompatActivity {
                                 propaitem.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfiley);
 
                                 bd.inserirPropItem(propaitem);
+
+                                progressbarstatus = progressbarstatus + 1;
+                                MainActivityFragment.progressBar.setProgress(progressbarstatus);
+
                                 propaitem.setId_prop(propa.getId());
 
                                 GravarImagem("propitem", propaitem);
+
+                                progressbarstatus = progressbarstatus + 1;
+                                MainActivityFragment.progressBar.setProgress(progressbarstatus);
+
                                 //    AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
                                 //   task3.execute("propitem", propaitem);
 
                             }
+                            MainActivityFragment.progressBar.setProgress(90);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
