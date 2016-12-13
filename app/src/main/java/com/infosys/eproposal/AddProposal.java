@@ -9,7 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -101,6 +103,7 @@ public class AddProposal extends AppCompatActivity {
     private class AsyncTaskValidarProposta extends AsyncTask<Object, Void, String> {
 
         String nome;
+        AddProposal context;
 
         public AsyncTaskValidarProposta() {
 
@@ -108,7 +111,6 @@ public class AddProposal extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Object[] objects) {
-
 
             ValidarProposta((String) objects[0], (String) objects[1]);
 
@@ -119,101 +121,108 @@ public class AddProposal extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             Toast.makeText(getApplication(), "Proposta Carregada", Toast.LENGTH_LONG).show();
+            Log.e(TAG,"Gravei");
+
+            Intent intent = new Intent("someFilter");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
             MainActivityFragment.progressBar.setVisibility(View.GONE);
 
         }
 
-    }
+        private void ValidarProposta(String valnome, String valsenha) {
+            String stg;
+            BD bd = new BD(getApplication());
 
-    private void ValidarProposta(String valnome, String valsenha) {
-        String stg;
-        BD bd = new BD(getApplication());
+            try {
 
-        try {
+                Proposal prop = new Proposal();
+                prop.setName(valnome);
+                prop.setSenha(valsenha);
 
-            Proposal prop = new Proposal();
-            prop.setName(valnome);
-            prop.setSenha(valsenha);
+                //stg = new EndpointsAsyncTask().execute("sel", prop).get();
+                JSONArray start_object = new JSONArray(Endpoints("sel", prop));
 
-            //stg = new EndpointsAsyncTask().execute("sel", prop).get();
-            JSONArray start_object = new JSONArray(Endpoints("sel", prop));
-
-            if (start_object != null) {
-                //  for (int i = 0; i < start_object.length(); i++) {
-                Proposal propa = new Proposal();
-                JSONObject obj = (JSONObject) start_object.get(0);
-                propa.setId((int) obj.get("id"));
-                propa.setName((String) obj.get("name"));
-                propa.setDescription((String) obj.get("description"));
-                propa.setImagepath((String) obj.get("imagepath"));
-                // Montar novo path
-                String extension = "";
-                int j = propa.getImagepath().lastIndexOf('.');
-                if (j >= 0) {
-                    extension = propa.getImagepath().substring(j + 1);
-                }
-                String newfile = propa.getId() + "." + extension;
-                propa.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfile);
-
-                //     propa.setTimestamp((String) obj.get("timestamp"));
-                long id_prop = bd.inserirProp(propa);
-
-                // AsyncTaskGravarImagem task = new AsyncTaskGravarImagem(this);
-                // task.execute("prop", propa);
-                GravarImagem("prop", propa);
-
-                // listar itens
-                try {
-                    long ss = (int) obj.get("id");
-
-                    // stg = new EndpointsAsyncTask().execute("lstitem", String.valueOf(ss)).get();
-                    JSONArray start_object3 = new JSONArray(Endpoints("lstitem", String.valueOf(ss)));
-                    //    List list = new ArrayList();
-
-                    if (start_object != null) {
-                        for (int i = 0; i < start_object3.length(); i++) {
-                            ProposalItem propaitem = new ProposalItem();
-                            JSONObject obj3 = (JSONObject) start_object3.get(i);
-                            propaitem.setId_prop(id_prop);
-                            propaitem.setId((int) obj3.get("id"));
-                            propaitem.setName((String) obj3.get("nome"));
-                            propaitem.setMenu((String) obj3.get("menu"));
-                            propaitem.setSeq((int) obj3.get("seq"));
-                            propaitem.setType((int) obj3.get("type"));
-                            propaitem.setImagepath((String) obj3.get("imagepath"));
-
-                            // Montar novo path
-                            extension = "";
-                            int y = propaitem.getImagepath().lastIndexOf('.');
-                            if (y >= 0) {
-                                extension = propaitem.getImagepath().substring(y + 1);
-                            }
-                            //   String newfiley = propaitem.getId() + "_" + propaitem.getSeq() + "." + extension;
-                            String newfiley = propa.getId() + "_" + propaitem.getSeq() + "." + extension;
-                            propaitem.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfiley);
-
-                            bd.inserirPropItem(propaitem);
-                            propaitem.setId_prop(propa.getId());
-
-                            GravarImagem("propitem", propaitem);
-                            //    AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
-                            //   task3.execute("propitem", propaitem);
-
-                        }
+                if (start_object != null) {
+                    //  for (int i = 0; i < start_object.length(); i++) {
+                    Proposal propa = new Proposal();
+                    JSONObject obj = (JSONObject) start_object.get(0);
+                    propa.setId((int) obj.get("id"));
+                    propa.setName((String) obj.get("name"));
+                    propa.setDescription((String) obj.get("description"));
+                    propa.setImagepath((String) obj.get("imagepath"));
+                    // Montar novo path
+                    String extension = "";
+                    int j = propa.getImagepath().lastIndexOf('.');
+                    if (j >= 0) {
+                        extension = propa.getImagepath().substring(j + 1);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+                    String newfile = propa.getId() + "." + extension;
+                    propa.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfile);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+                    //     propa.setTimestamp((String) obj.get("timestamp"));
+                    long id_prop = bd.inserirProp(propa);
+
+                    // AsyncTaskGravarImagem task = new AsyncTaskGravarImagem(this);
+                    // task.execute("prop", propa);
+                    GravarImagem("prop", propa);
+
+                    // listar itens
+                    try {
+                        long ss = (int) obj.get("id");
+
+                        // stg = new EndpointsAsyncTask().execute("lstitem", String.valueOf(ss)).get();
+                        JSONArray start_object3 = new JSONArray(Endpoints("lstitem", String.valueOf(ss)));
+                        //    List list = new ArrayList();
+
+                        if (start_object != null) {
+                            for (int i = 0; i < start_object3.length(); i++) {
+                                ProposalItem propaitem = new ProposalItem();
+                                JSONObject obj3 = (JSONObject) start_object3.get(i);
+                                propaitem.setId_prop(id_prop);
+                                propaitem.setId((int) obj3.get("id"));
+                                propaitem.setName((String) obj3.get("nome"));
+                                propaitem.setMenu((String) obj3.get("menu"));
+                                propaitem.setSeq((int) obj3.get("seq"));
+                                propaitem.setType((int) obj3.get("type"));
+                                propaitem.setImagepath((String) obj3.get("imagepath"));
+
+                                // Montar novo path
+                                extension = "";
+                                int y = propaitem.getImagepath().lastIndexOf('.');
+                                if (y >= 0) {
+                                    extension = propaitem.getImagepath().substring(y + 1);
+                                }
+                                //   String newfiley = propaitem.getId() + "_" + propaitem.getSeq() + "." + extension;
+                                String newfiley = propa.getId() + "_" + propaitem.getSeq() + "." + extension;
+                                propaitem.setImagepath(Memory.FindDir("/Data/", getApplication()) + newfiley);
+
+                                bd.inserirPropItem(propaitem);
+                                propaitem.setId_prop(propa.getId());
+
+                                GravarImagem("propitem", propaitem);
+                                //    AsyncTaskGravarImagem task3 = new AsyncTaskGravarImagem(this);
+                                //   task3.execute("propitem", propaitem);
+
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private void Gravei() {
 
     }
+
 
     private String Endpoints(Object... objects) {
 

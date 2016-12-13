@@ -1,12 +1,15 @@
 package com.infosys.eproposal;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.List;
 
+import static android.R.attr.x;
 import static com.infosys.eproposal.R.id.ivprop;
 
 /**
@@ -78,6 +82,9 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+// add this to onCreateView
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("someFilter"));
 
         Inicial();
 
@@ -264,5 +271,17 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshAdapter();
+        }
+    };
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // add this to onDestroy
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+    }
 }
