@@ -100,7 +100,7 @@ public class AddProposal extends AppCompatActivity {
         MainActivityFragment.progressBar.setProgress(0);
         MainActivityFragment.progressBar.setVisibility(View.VISIBLE);
         MainActivityFragment.progressBars.setVisibility(View.VISIBLE);
-
+        Toast.makeText(getApplication(), "Gravando proposta", Toast.LENGTH_LONG).show();
     }
 
     private class AsyncTaskValidarProposta extends AsyncTask<Object, Void, String> {
